@@ -1,14 +1,7 @@
 FROM openjdk:alpine
 MAINTAINER Shoma Ishihara <sishihara@iij.ad.jp>
 
-ARG http_proxy
-ARG https_proxy
 ARG presto_version=0.175
-
-ENV HTTP_PROXY ${http_proxy}
-ENV HTTPS_PROXY ${https_proxy}
-ENV http_proxy ${http_proxy}
-ENV https_proxy ${https_proxy}
 
 ENV PRESTO_VERSION ${presto_version}
 ENV PRESTO_HOME /opt/presto-server-${presto_version}
@@ -23,7 +16,7 @@ RUN mkdir -p /opt && cd /opt && \
 
 COPY config/ ${PRESTO_HOME}/etc/
 
-RUN apk --no-cache add python util-linux bash
+RUN apk --no-cache add python util-linux bash java-snappy snappy
 
 ADD *.tmpl /opt/
 ADD run.sh /run.sh
